@@ -28,14 +28,6 @@ if errorlevel 1 (
     exit /b 1
 )
 
-REM Install dependencies
-echo Installing dependencies...
-pip install --no-cache-dir -r requirements.txt
-if errorlevel 1 (
-    echo ERROR: Failed to install dependencies! Exiting...
-    pause
-    exit /b 1
-)
 
 REM Set PYTHONPATH to include the src directory
 set PYTHONPATH=%CD%\src
