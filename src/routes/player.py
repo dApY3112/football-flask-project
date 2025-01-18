@@ -1,7 +1,7 @@
 # src/routes/player.py
 from flask import Blueprint, jsonify
-from src.utils.db import execute_query
-from src.utils.helpers import format_player_data
+from utils.db import execute_query
+from utils.helpers import format_player_data
 
 player_blueprint = Blueprint("player", __name__)
 
