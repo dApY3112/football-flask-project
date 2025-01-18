@@ -9,7 +9,6 @@ team_blueprint = Blueprint("team", __name__)
 initialize_db()
 
 # Corrected the route path to "/teams"
-@team_blueprint.route("/teams", methods=["GET"])
 @team_blueprint.route("/", methods=["GET"])  # Changed "/teams" to "/"
 def get_teams():
     rows = execute_query("SELECT * FROM teams")
