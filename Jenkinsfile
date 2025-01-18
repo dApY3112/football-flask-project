@@ -36,11 +36,11 @@ pipeline {
                     // Authenticate with Snyk API using the token
                     withCredentials([string(credentialsId: 'snyk-api-token', variable: 'SNYK_API_TOKEN')]) {
                         // Authenticate to Snyk using the API token
-                        sh "snyk auth ${SNYK_API_TOKEN}"
+                        bat "snyk auth %SNYK_API_TOKEN%"  // Use 'bat' for Windows
                     }
                     
                     // Run Snyk test for vulnerabilities in the Docker image
-                    sh "snyk test --docker ${IMAGE_NAME}:${IMAGE_TAG}"
+                    bat "snyk test --docker %IMAGE_NAME%:%IMAGE_TAG%"  // Use 'bat' for Windows
                 }
             }
         }
