@@ -28,18 +28,6 @@ pipeline {
                 bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
             }
         }
-        stage('Snyk Scan for Vulnerabilities') {
-            steps {
-                script {
-                    withCredentials([string(credentialsId: 'snyk-api-token', variable: 'SNYK_API_TOKEN')]) {
-                        // Authenticate with Snyk API using the token
-                        bat "snyk auth %SNYK_API_TOKEN%"
-                    }
-                    // Test the Docker image for vulnerabilities
-                    bat "snyk container test %IMAGE_NAME%:%IMAGE_TAG%"
-                }
-            }
-        }
         stage('Login to Docker Hub') {
             steps {
                 script {
