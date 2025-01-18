@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        docker { image 'docker:19.03.12' }
-    }
+    agent any
     environment {
         PYTHONPATH = "${WORKSPACE}/src"
     }
