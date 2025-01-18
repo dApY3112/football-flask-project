@@ -1,16 +1,12 @@
-import pytest
-from src.app import app  # Import your Flask app
+# src/tests/test_endpoints.py
+import requests
 
-@pytest.fixture
-def client():
-    # This will set up a test client that doesn't require the Flask server to be running
-    with app.test_client() as client:
-        yield client
+BASE_URL = "http://localhost:5000"
 
-def test_get_teams(client):
-    response = client.get('/teams')
+def test_get_teams():
+    response = requests.get(f"{BASE_URL}/teams")
     assert response.status_code == 200
 
-def test_get_players(client):
-    response = client.get('/players')
+def test_get_players():
+    response = requests.get(f"{BASE_URL}/players")
     assert response.status_code == 200
