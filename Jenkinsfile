@@ -3,7 +3,7 @@ pipeline {
     environment {
         PYTHONPATH = "${WORKSPACE}/src"
         REGISTRY = "docker.io"  // Docker Hub registry URL (default)
-        IMAGE_NAME = "dapy3112/football-backend"  // Replace with your Docker Hub username and image name
+        IMAGE_NAME = "football-backend"  // Replace with your Docker Hub username and image name
         IMAGE_TAG = "latest"  // Define the tag for the image
     }
     stages {
