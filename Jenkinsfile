@@ -44,18 +44,13 @@ pipeline {
           stage('Scan Docker Image for Vulnerabilities') {
             steps {
                 script {
-                    // Check if Docker Scan is available
-                    bat 'docker scan --help'
-                    
-                    // If Docker Scan is available
-                    bat 'docker scan --accept-license %IMAGE_NAME%:%IMAGE_TAG%'  // For Docker's native scanning
-
-                    // If you are using Trivy, replace the command with Trivy scan
-                    // Ensure Trivy is installed and available in the environment
-                    // bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // If using Trivy for scanning
-                }
-            }
+            // Run Docker scan without the --accept-license flag
+                    bat 'docker scan %IMAGE_NAME%:%IMAGE_TAG%'  // For Docker's native scanning
+            // Or use Trivy for additional scanning
+            // bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // If using Trivy for scanning
         }
+    }
+}
         
         stage('Push Docker Image to Docker Hub') {
             steps {
