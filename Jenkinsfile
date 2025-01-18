@@ -37,7 +37,7 @@ pipeline {
                             -Dsonar.projectName=%SONAR_PROJECT_NAME% ^
                             -Dsonar.sources=src ^
                             -Dsonar.language=python ^
-                            -Dsonar.python.coverage.reportPaths=coverage.xml  // if you have code coverage reports
+                            -Dsonar.python.coverage.reportPaths=coverage.xml
                         '''
                     }
                 }
