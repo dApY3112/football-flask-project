@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t ${IMAGE_NAME}:${IMAGE_TAG} .'  // Build Docker image with tag
+                bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'  // Use Windows environment variable syntax
             }
         }
 
@@ -45,7 +45,7 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
                     docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        docker.image("${IMAGE_NAME}:${IMAGE_TAG}").push()  // Push image to Docker Hub
+                        docker.image("%IMAGE_NAME%:%IMAGE_TAG%").push()  // Push image to Docker Hub
                     }
                 }
             }
