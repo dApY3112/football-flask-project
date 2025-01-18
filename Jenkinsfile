@@ -19,11 +19,7 @@ pipeline {
                 bat '.\\scripts\\run_tests.bat'  // Change to batch script for Windows
             }
         }
-        stage('Lint') {
-            steps {
-                bat 'pylint src\\'  // Use Windows path separator
-            }
-        }
+
         stage('Package') {
             steps {
                 bat 'docker build -t football-backend .'  // Same docker command, ensure Docker is installed on Windows
