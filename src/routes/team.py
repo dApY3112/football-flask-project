@@ -8,13 +8,14 @@ team_blueprint = Blueprint("team", __name__)
 # Initialize the database
 initialize_db()
 
-@team_blueprint.route("/", methods=["GET"])
+# Corrected the route path to "/teams"
+@team_blueprint.route("/teams", methods=["GET"])
 def get_teams():
     rows = execute_query("SELECT * FROM teams")
     teams = [format_team_data(row) for row in rows]
     return jsonify(teams), 200
 
-@team_blueprint.route("/", methods=["POST"])
+@team_blueprint.route("/teams", methods=["POST"])
 def add_team():
     data = request.json
     execute_query(
