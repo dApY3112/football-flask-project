@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    environment {
+        PYTHONPATH = "${WORKSPACE}/src"
+    }
     stages {
         stage('Checkout') {
             steps {
