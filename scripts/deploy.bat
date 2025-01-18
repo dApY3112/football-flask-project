@@ -18,7 +18,7 @@ if errorlevel 1 (
 
 
 :: Start Flask app without input redirection
-start /B python src\app.py
+start pythonw src\app.py
 
 :: Allow time for the Flask app to initialize
 timeout /t 5
