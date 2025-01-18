@@ -1,15 +1,21 @@
 @echo off
 echo Deploying the application...
-
-:: Set PYTHONPATH to the src directory
-set PYTHONPATH=%CD%\src
-
-:: Check the current directory for debugging purposes
-echo Current directory: %CD%
-echo PYTHONPATH is set to: %PYTHONPATH%
-
 :: Activate the virtual environment
 call venv\Scripts\activate
+
+REM Set PYTHONPATH to include the src directory
+set PYTHONPATH=%CD%\src
+echo PYTHONPATH is set to: %PYTHONPATH%
+
+REM Start the Flask application
+echo Starting the Flask application...
+start /B python src\app.py
+if errorlevel 1 (
+    echo ERROR: Application failed to start! Check logs for details.
+    pause
+    exit /b 1
+)
+
 
 :: Start Flask app without input redirection
 start /B python src\app.py
