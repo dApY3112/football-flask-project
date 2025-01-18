@@ -5,7 +5,7 @@ pipeline {
         REGISTRY = "docker.io"  // Docker Hub registry URL (default)
         IMAGE_NAME = "dapy3112/football-backend"  // Replace with your Docker Hub username and image name
         IMAGE_TAG = "latest"  // Define the tag for the image
-        DOCKER_CLI_EXPERIMENTAL = "enabled"  // Enable experimental features for Docker (e.g., scan)
+         SNYK_TOKEN = credentials('snyk-api-token')  // Retrieve Snyk API token from Jenkins credentials
     }
     stages {
         stage('Checkout') {
@@ -29,7 +29,21 @@ pipeline {
                 bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
             }
         }
-
+        // Add Snyk scan for vulnerabilities
+        stage('Snyk Scan for Vulnerabilities') {
+            steps {
+                script {
+                    // Authenticate with Snyk API using the token
+                    withCredentials([string(credentialsId: 'snyk-api-token', variable: 'SNYK_API_TOKEN')]) {
+                        // Authenticate to Snyk using the API token
+                        sh "snyk auth ${SNYK_API_TOKEN}"
+                    }
+                    
+                    // Run Snyk test for vulnerabilities in the Docker image
+                    sh "snyk test --docker ${IMAGE_NAME}:${IMAGE_TAG}"
+                }
+            }
+        }
         stage('Login to Docker Hub') {
             steps {
                 script {
