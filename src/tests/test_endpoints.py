@@ -13,5 +13,5 @@ def test_get_teams(client):
 
 
 def test_get_players(client):
-    response = client.get('/players')
+    response = client.get('/players/')
     assert response.status_code == 200
