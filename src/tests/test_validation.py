@@ -1,4 +1,8 @@
 # src/tests/test_validation.py
+import sys
+import os
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../src')))
+
 from src.security.validation import validate_team_input
 
 def test_valid_input():
