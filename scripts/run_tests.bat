@@ -7,6 +7,14 @@ echo Current directory: %CD%
 echo PYTHONPATH is set to: %PYTHONPATH%
 
 
+
+REM Start the Flask server in the background
+echo Starting Flask server...
+start /B python -m src.app
+
+REM Wait for the server to start up (you may need to adjust the delay)
+timeout /t 5
+
 REM Run the tests
 echo Running tests...
 python -m pytest --maxfail=1 --disable-warnings -q
