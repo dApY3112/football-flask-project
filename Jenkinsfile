@@ -77,6 +77,7 @@ pipeline {
                 }
             }
         }
+    }
     post {
             success {
                 echo "Deployment to Vercel successful!"
