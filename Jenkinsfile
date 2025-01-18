@@ -42,12 +42,13 @@ pipeline {
             steps {
                  script {
                         bat 'docker logout'  // Clear any existing credentials
-                        bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
-                        bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
-                        bat 'docker logout'  // Logout for security
-                        }
+                        docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
+                        def image = docker.image("${IMAGE_NAME}:${IMAGE_TAG}") // Create the Docker image reference
+                        image.push()  // Push the image to Docker Hub
                     }
                 }
+             }
+         }
         stage('Deploy') {
             steps {
                 bat '.\\scripts\\deploy.bat'  // Run your deployment script
