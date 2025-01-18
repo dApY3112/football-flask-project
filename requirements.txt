@@ -1,0 +1,6 @@
+flask              # Web framework
+pydantic          # Data validation and parsing
+PyJWT             # JWT-based authentication
+pytest             # Testing framework
+requests          # For making HTTP requests (used in tests)
+pylint           # Linter for Python code quality 
