@@ -43,7 +43,7 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
                     docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        def image = docker.image(%IMAGE_NAME%:%IMAGE_TAG%) // Create the Docker image reference
+                        def image = docker.image("${IMAGE_NAME}:${IMAGE_TAG}") // Create the Docker image reference
                         image.push()  // Push the image to Docker Hub
                     }
                 }
