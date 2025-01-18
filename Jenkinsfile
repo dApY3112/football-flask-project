@@ -29,6 +29,7 @@ pipeline {
                     // Log in to Docker Hub using credentials from Jenkins
                     docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
                         // Authentication done here
+                    }
                 }
             }
         }
