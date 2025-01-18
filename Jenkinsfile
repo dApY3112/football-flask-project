@@ -4,7 +4,7 @@ pipeline {
         PYTHONPATH = "${WORKSPACE}/src"
         REGISTRY = "docker.io"
         IMAGE_NAME = "dapy3112/football-flask-project"
-        SONARQUBE = 'football-backend'  // Name of the SonarQube server configured in Jenkins
+        SONARQUBE = 'SonarQube'  // Name of the SonarQube server configured in Jenkins
         SONAR_PROJECT_KEY = 'football-backend'  // The key for your SonarQube project
         SONAR_PROJECT_NAME = 'football-backend'  // The name of your project in SonarQube
         IMAGE_TAG = "latest"
