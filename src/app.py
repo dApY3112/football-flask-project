@@ -1,8 +1,8 @@
 # src/app.py
 from flask import Flask, jsonify, request
-from src.routes.team import team_blueprint
-from src.routes.player import player_blueprint
-from src.security.logger import log_event
+from routes.team import team_blueprint
+from routes.player import player_blueprint
+from security.logger import log_event
 
 app = Flask(__name__)  # Enforce strict slashes
 
