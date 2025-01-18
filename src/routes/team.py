@@ -10,12 +10,13 @@ initialize_db()
 
 # Corrected the route path to "/teams"
 @team_blueprint.route("/teams", methods=["GET"])
+@team_blueprint.route("/", methods=["GET"])  # Changed "/teams" to "/"
 def get_teams():
     rows = execute_query("SELECT * FROM teams")
     teams = [format_team_data(row) for row in rows]
     return jsonify(teams), 200
 
-@team_blueprint.route("/teams", methods=["POST"])
+@team_blueprint.route("/", methods=["POST"])
 def add_team():
     data = request.json
     execute_query(
