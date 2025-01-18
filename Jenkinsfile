@@ -2,9 +2,9 @@ pipeline {
     agent any
     environment {
         PYTHONPATH = "${WORKSPACE}/src"
-        REGISTRY = "docker.io"  // Docker Hub registry URL (default)
-        IMAGE_NAME = "dapy3112/football-flask-project"  // Replace with your Docker Hub username and image name
-        IMAGE_TAG = "latest"  // Define the tag for the image
+        REGISTRY = "docker.io"
+        IMAGE_NAME = "dapy3112/football-flask-project"
+        IMAGE_TAG = "latest"
     }
     stages {
         stage('Checkout') {
@@ -19,47 +19,37 @@ pipeline {
         }
         stage('Run Tests') {
             steps {
-                bat '.\\scripts\\run_tests.bat'  // Run your test script
+                bat '.\\scripts\\run_tests.bat'
             }
         }
-
         stage('Login to Docker Hub') {
             steps {
                 script {
-                    // Log in to Docker Hub using credentials from Jenkins
-                    docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        // Authentication done here
+                    withCredentials([usernamePassword(credentialsId: 'dockerhub-credentials', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+                        bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'
                     }
                 }
             }
         }
         stage('Build Docker Image') {
             steps {
-                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
+                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."
             }
         }
         stage('Push Docker Image to Docker Hub') {
             steps {
-                 script {
-                        bat 'docker logout'  // Clear any existing credentials
-                        docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        def image = docker.image("dapy3112/football-flask-project:latest") // Create the Docker image reference
-                        image.push()  // Push the image to Docker Hub
-                    }
-                }
-             }
-         }
+                bat "docker push %IMAGE_NAME%:%IMAGE_TAG%"
+            }
+        }
         stage('Deploy') {
             steps {
-                bat '.\\scripts\\deploy.bat'  // Run your deployment script
+                bat '.\\scripts\\deploy.bat'
             }
         }
     }
     post {
         always {
-            // Clean up resources or perform any necessary security post-actions
-            echo "Pipeline finished. Make sure to clean up and rotate sensitive credentials if needed."
+            echo "Pipeline finished. Ensure sensitive data is handled securely."
         }
     }
 }
-
