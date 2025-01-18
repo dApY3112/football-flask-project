@@ -44,10 +44,8 @@ pipeline {
           stage('Scan Docker Image for Vulnerabilities') {
             steps {
                 script {
-            // Run Docker scan without the --accept-license flag
-                    bat 'docker scan %IMAGE_NAME%:%IMAGE_TAG%'  // For Docker's native scanning
-            // Or use Trivy for additional scanning
-            // bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // If using Trivy for scanning
+            // Run Trivy scan for vulnerabilities
+                    bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // For Trivy scanning
         }
     }
 }
