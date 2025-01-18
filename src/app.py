@@ -4,7 +4,7 @@ from src.routes.team import team_blueprint
 from src.routes.player import player_blueprint
 from src.security.logger import log_event
 
-app = Flask(__name__, strict_slashes=True)  # Enforce strict slashes
+app = Flask(__name__)  # Enforce strict slashes
 
 
 # Register Blueprints
