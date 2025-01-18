@@ -40,10 +40,12 @@ pipeline {
         }
         stage('Push Docker Image to Docker Hub') {
             steps {
-            bat 'docker logout'  // Clear any existing credentials
-            bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
-            bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
-            bat 'docker logout'  // Logout for security
+                 script {
+                        bat 'docker logout'  // Clear any existing credentials
+                        bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
+                        bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
+                        bat 'docker logout'  // Logout for security
+                        }
                     }
                 }
         stage('Deploy') {
