@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-                bat 'pip install -r requirements.txt'
+                bat 'pip install --no-cache-dir -r requirements.txt'
             }
         }
         stage('Run Tests') {
