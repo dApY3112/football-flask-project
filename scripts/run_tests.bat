@@ -6,9 +6,6 @@ REM Check the current directory for debugging purposes
 echo Current directory: %CD%
 echo PYTHONPATH is set to: %PYTHONPATH%
 
-REM Install dependencies (optional, if you haven't done so already)
-echo Installing dependencies...
-pip install -r C:\ProgramData\Jenkins\.jenkins\workspace\football-backend\requirements.txt
 
 REM Run the tests
 echo Running tests...
