@@ -22,7 +22,12 @@ if errorlevel 1 (
 
 :: Allow time for the Flask app to initialize
 timeout /t 5
+:: Kill the Flask server by terminating the process
+echo Stopping the Flask application...
+taskkill /F /IM python.exe
 
+:: Allow time for the server to terminate
+timeout /t 2
 :: Avoid the interactive pause (remove the pause command)
 echo Flask app should now be running in the background.
 
