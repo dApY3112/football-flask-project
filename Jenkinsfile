@@ -5,6 +5,7 @@ pipeline {
         REGISTRY = "docker.io"  // Docker Hub registry URL (default)
         IMAGE_NAME = "dapy3112/football-backend"  // Replace with your Docker Hub username and image name
         IMAGE_TAG = "latest"  // Define the tag for the image
+        DOCKER_CLI_EXPERIMENTAL = "enabled"  // Enable experimental features for Docker (e.g., scan)
     }
     stages {
         stage('Checkout') {
@@ -39,7 +40,18 @@ pipeline {
                 }
             }
         }
-
+    // Add Docker image scanning for vulnerabilities (using Docker Scan or Trivy)
+        stage('Scan Docker Image for Vulnerabilities') {
+            steps {
+                script {
+                    // Scan the image for vulnerabilities using Docker's scan functionality or Trivy
+                    sh 'docker scan --accept-license ${IMAGE_NAME}:${IMAGE_TAG}'  // For Docker's native scanning
+                    // Or use Trivy for additional scanning
+                    // sh 'trivy image ${IMAGE_NAME}:${IMAGE_TAG}'  // If using Trivy for scanning
+                }
+            }
+        }
+        
         stage('Push Docker Image to Docker Hub') {
             steps {
                 script {
