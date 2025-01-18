@@ -1,46 +1,21 @@
 @echo off
 echo Deploying the application...
 
-REM Check if Python is available
-where python >nul 2>&1
-if errorlevel 1 (
-    echo ERROR: Python is not installed or not added to PATH! Exiting...
-    pause
-    exit /b 1
-)
-
-REM Check if the virtual environment exists
-if not exist venv\Scripts\activate (
-    echo Virtual environment not found. Creating one...
-    python -m venv venv
-    if errorlevel 1 (
-        echo ERROR: Failed to create virtual environment! Exiting...
-        pause
-        exit /b 1
-    )
-)
-
-REM Activate the virtual environment
-call venv\Scripts\activate
-if errorlevel 1 (
-    echo ERROR: Failed to activate virtual environment! Exiting...
-    pause
-    exit /b 1
-)
-
-
-REM Set PYTHONPATH to include the src directory
+:: Set PYTHONPATH to the src directory
 set PYTHONPATH=%CD%\src
+
+:: Check the current directory for debugging purposes
+echo Current directory: %CD%
 echo PYTHONPATH is set to: %PYTHONPATH%
 
-REM Start the Flask application
-echo Starting the Flask application...
-python src\app.py
-if errorlevel 1 (
-    echo ERROR: Application failed to start! Check logs for details.
-    pause
-    exit /b 1
-)
+:: Activate the virtual environment
+call venv\Scripts\activate
 
-REM Pause to keep the window open (optional)
+:: Start the Flask application in the background
+start /B python src\app.py
+
+:: Optional: Add a sleep to allow the Flask app to initialize
+timeout /t 5
+
+:: Pause for debugging (optional, remove if not needed)
 pause
