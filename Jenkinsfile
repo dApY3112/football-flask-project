@@ -14,13 +14,7 @@ pipeline {
         }
         stage('Install Dependencies') {
             steps {
-            bat """
-                if not exist venv\\Scripts\\activate (
-            python -m venv venv
-        )
-        call venv\\Scripts\\activate
-        pip install --no-cache-dir -r requirements.txt
-        """
+            bat "pip install --no-cache-dir -r requirements.txt"
             }
         }
         stage('Run Tests') {
