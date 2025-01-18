@@ -46,7 +46,6 @@ pipeline {
             bat 'docker logout'  // Logout for security
                     }
                 }
-            }
         stage('Deploy') {
             steps {
                 bat '.\\scripts\\deploy.bat'  // Run your deployment script
