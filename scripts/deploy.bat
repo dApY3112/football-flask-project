@@ -9,7 +9,7 @@ echo PYTHONPATH is set to: %PYTHONPATH%
 
 REM Start the Flask application
 echo Starting the Flask application...
-start /B python src\app.py
+start pythonw src\app.py
 if errorlevel 1 (
     echo ERROR: Application failed to start! Check logs for details.
     pause
