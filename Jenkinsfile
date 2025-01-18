@@ -25,11 +25,10 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                script {
-                    // Log in to Docker Hub using credentials from Jenkins
-                    docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        // Authentication done here
-                    }
+                 bat 'docker logout'  // Clear any existing credentials
+                bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
+                bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
+                bat 'docker logout'  // Logout for security
                 }
             }
         }
