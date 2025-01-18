@@ -25,10 +25,10 @@ pipeline {
 
         stage('Login to Docker Hub') {
             steps {
-                 bat 'docker logout'  // Clear any existing credentials
-                bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
-                bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
-                bat 'docker logout'  // Logout for security
+                script {
+                    // Log in to Docker Hub using credentials from Jenkins
+                    docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
+                        // Authentication done here
                 }
             }
         }
@@ -39,11 +39,10 @@ pipeline {
         }
         stage('Push Docker Image to Docker Hub') {
             steps {
-                script {
-                    // Push the Docker image to Docker Hub
-                    docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        def image = docker.image("${IMAGE_NAME}:${IMAGE_TAG}") // Create the Docker image reference
-                        image.push()  // Push the image to Docker Hub
+            bat 'docker logout'  // Clear any existing credentials
+            bat 'docker login -u %DOCKER_USERNAME% -p %DOCKER_PASSWORD%'  // Explicit login
+            bat "docker push ${IMAGE_NAME}:${IMAGE_TAG}"  // Push the Docker image
+            bat 'docker logout'  // Logout for security
                     }
                 }
             }
