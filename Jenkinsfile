@@ -41,13 +41,18 @@ pipeline {
             }
         }
     // Add Docker image scanning for vulnerabilities (using Docker Scan or Trivy)
-        stage('Scan Docker Image for Vulnerabilities') {
+          stage('Scan Docker Image for Vulnerabilities') {
             steps {
                 script {
-                    // Scan the image for vulnerabilities using Docker's scan functionality or Trivy
-                    sh 'docker scan --accept-license ${IMAGE_NAME}:${IMAGE_TAG}'  // For Docker's native scanning
-                    // Or use Trivy for additional scanning
-                    // sh 'trivy image ${IMAGE_NAME}:${IMAGE_TAG}'  // If using Trivy for scanning
+                    // Check if Docker Scan is available
+                    bat 'docker scan --help'
+                    
+                    // If Docker Scan is available
+                    bat 'docker scan --accept-license %IMAGE_NAME%:%IMAGE_TAG%'  // For Docker's native scanning
+
+                    // If you are using Trivy, replace the command with Trivy scan
+                    // Ensure Trivy is installed and available in the environment
+                    // bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // If using Trivy for scanning
                 }
             }
         }
@@ -70,4 +75,11 @@ pipeline {
             }
         }
     }
+    post {
+        always {
+            // Clean up resources or perform any necessary security post-actions
+            echo "Pipeline finished. Make sure to clean up and rotate sensitive credentials if needed."
+        }
+    }
 }
+
