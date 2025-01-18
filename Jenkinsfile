@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                bat "docker build -t dapy3112/football-flask-project:latest ."  // Use Windows environment variable syntax
+                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
             }
         }
         stage('Push Docker Image to Docker Hub') {
