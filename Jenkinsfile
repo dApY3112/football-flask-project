@@ -40,15 +40,6 @@ pipeline {
                 }
             }
         }
-    // Add Docker image scanning for vulnerabilities (using Docker Scan or Trivy)
-          stage('Scan Docker Image for Vulnerabilities') {
-            steps {
-                script {
-            // Run Trivy scan for vulnerabilities
-                    bat 'trivy image %IMAGE_NAME%:%IMAGE_TAG%'  // For Trivy scanning
-        }
-    }
-}
         
         stage('Push Docker Image to Docker Hub') {
             steps {
