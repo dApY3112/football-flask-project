@@ -4,9 +4,10 @@ pipeline {
         PYTHONPATH = "${WORKSPACE}/src"
         REGISTRY = "docker.io"
         IMAGE_NAME = "dapy3112/football-flask-project"
-        SONARQUBE = 'SonarQube'  // Name of the SonarQube server configured in Jenkins
-        SONAR_PROJECT_KEY = 'football-backend'  // The key for your SonarQube project
-        SONAR_PROJECT_NAME = 'football-backend'  // The name of your project in SonarQube
+        SONARQUBE = 'SonarQube'  
+        SONAR_PROJECT_KEY = 'football-backend'  
+        SONAR_PROJECT_NAME = 'football-backend'  
+        VERCEL_TOKEN = credentials('VERCEL_TOKEN')
         IMAGE_TAG = "latest"
     }
     stages {
@@ -63,15 +64,25 @@ pipeline {
                 bat "docker push %IMAGE_NAME%:%IMAGE_TAG%"
             }
         }
-        stage('Deploy') {
+        stage('Deploy to Vercel') {
             steps {
-                bat '.\\scripts\\deploy.bat'
+                script {
+                    bat """
+                    REM Authenticate Vercel CLI
+                    vercel login --token %VERCEL_TOKEN%
+                    
+                    REM Deploy the project
+                    vercel --prod --token %VERCEL_TOKEN%
+                    """
+                }
+            }
+        }
+    post {
+            success {
+                echo "Deployment to Vercel successful!"
+            }
+            failure {
+                echo "Deployment failed. Check logs for details."
             }
         }
     }
-    post {
-        always {
-            echo "Pipeline finished. Ensure sensitive data is handled securely."
-        }
-    }
-}
