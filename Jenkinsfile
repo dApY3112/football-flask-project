@@ -46,8 +46,6 @@ pipeline {
                     }
                 }
             }
-        }
-
         stage('Deploy') {
             steps {
                 bat '.\\scripts\\deploy.bat'  // Run your deployment script
