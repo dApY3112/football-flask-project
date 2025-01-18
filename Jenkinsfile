@@ -35,7 +35,7 @@ pipeline {
         }
         stage('Build Docker Image') {
             steps {
-                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
+                bat "docker build -t dapy3112/football-flask-project:latest ."  // Use Windows environment variable syntax
             }
         }
         stage('Push Docker Image to Docker Hub') {
@@ -43,7 +43,7 @@ pipeline {
                  script {
                         bat 'docker logout'  // Clear any existing credentials
                         docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        def image = docker.image("${IMAGE_NAME}:${IMAGE_TAG}") // Create the Docker image reference
+                        def image = docker.image("dapy3112/football-flask-project:latest") // Create the Docker image reference
                         image.push()  // Push the image to Docker Hub
                     }
                 }
