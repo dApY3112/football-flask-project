@@ -1,7 +1,7 @@
 # src/routes/team.py
 from flask import Blueprint, request, jsonify
-from src.utils.db import execute_query, initialize_db
-from src.utils.helpers import format_team_data
+from utils.db import execute_query, initialize_db
+from utils.helpers import format_team_data
 
 team_blueprint = Blueprint("team", __name__)
 
