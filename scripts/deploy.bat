@@ -2,7 +2,7 @@
 echo Deploying the application...
 
 :: Set PYTHONPATH to the src directory
-set PYTHONPATH=%CD%\src
+set PYTHONPATH=%CD%
 
 :: Check the current directory for debugging purposes
 echo Current directory: %CD%
