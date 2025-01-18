@@ -25,7 +25,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                bat 'docker build -t %IMAGE_NAME%:%IMAGE_TAG% .'  // Use Windows environment variable syntax
+                bat "docker build -t %IMAGE_NAME%:%IMAGE_TAG% ."  // Use Windows environment variable syntax
             }
         }
 
@@ -34,7 +34,7 @@ pipeline {
                 script {
                     // Log in to Docker Hub using credentials from Jenkins
                     docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        // No action needed, just authenticating here
+                        // Authentication done here
                     }
                 }
             }
@@ -45,7 +45,8 @@ pipeline {
                 script {
                     // Push the Docker image to Docker Hub
                     docker.withRegistry('https://docker.io', 'dockerhub-credentials') {
-                        docker.image("%IMAGE_NAME%:%IMAGE_TAG%").push()  // Push image to Docker Hub
+                        def image = docker.image("%IMAGE_NAME%:%IMAGE_TAG%") // Create the Docker image reference
+                        image.push()  // Push the image to Docker Hub
                     }
                 }
             }
